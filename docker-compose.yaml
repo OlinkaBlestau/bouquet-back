@@ -1,0 +1,67 @@
+version: '3.9'
+
+services:
+  bouquet-php:
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile
+    container_name: bouquet-php
+    volumes:
+      - ${DOCKER_APP_PATH}:/var/www:rw
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    depends_on:
+      - bouquet-postgres
+    networks:
+      - bouquet-network
+
+  bouquet-nginx:
+    image: nginx:alpine
+    container_name: bouquet-nginx
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+      - ./docker/nginx/ssl:/etc/nginx/ssl
+    networks:
+      - bouquet-network
+
+  bouquet-postgres:
+    container_name: bouquet-postgres
+    build:
+      context: ./docker/postgres
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_MULTIPLE_DATABASES: ${DB_DATABASE}, ${DB_DATABASE_TEST}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ CMD-SHELL, pg_isready, -U, $DB_USERNAME, -d, $DB_USERNAME ]
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 80s
+    volumes:
+      - ./docker/postgres/init.sh:/docker-entrypoint-initdb.d/init.sh
+      - bouquet-storage:/var/lib/postgresql/data:rw
+    networks:
+      - bouquet-network
+
+volumes:
+  bouquet-storage:
+    name: bouquet-storage
+    driver: local
+
+networks:
+  bouquet-network:
+    driver: bridge
+
+
+
+
+
