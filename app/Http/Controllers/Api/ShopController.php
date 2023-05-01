@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\ShopRepository;
-use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Response;
+use Illuminate\Http\Response;
+use Illuminate\Http\Request;
 
 class ShopController extends Controller
 {
@@ -13,7 +13,7 @@ class ShopController extends Controller
     {
         $shops = $shopRepository->paginate($request->get('limit'));
 
-        return response()->success(compact('shops'));
+        return response(compact('shops'));
     }
 
     public function store(Request $request, ShopRepository $shopRepository): Response
@@ -21,14 +21,14 @@ class ShopController extends Controller
         $data = $request->all();
         $shop = $shopRepository->create($data);
 
-        return response()->success(compact('shop'));
+        return response(compact('shop'));
     }
 
     public function show(int $id, ShopRepository $shopRepository): Response
     {
-        $shop = $shopRepository->show($id);
+        $shop = $shopRepository->find($id);
 
-        return response()->success(compact('shop'));
+        return response(compact('shop'));
     }
 
     public function update(Request $request, int $id, ShopRepository $shopRepository): Response
@@ -36,13 +36,13 @@ class ShopController extends Controller
         $data = $request->all();
         $shop = $shopRepository->update($data, $id);
 
-        return response()->success(compact('shop'));
+        return response(compact('shop'));
     }
 
     public function destroy(int $id, ShopRepository $shopRepository): Response
     {
         $shop = $shopRepository->delete($id);
 
-        return response()->success(compact('shop'));
+        return response(compact('shop'));
     }
 }

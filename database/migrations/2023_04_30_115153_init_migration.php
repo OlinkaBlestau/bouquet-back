@@ -54,7 +54,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('color');
             $table->float('price');
-            $table->integer('storage_flower_amount');
+            $table->integer('storage_flowers_amount');
             $table->string('img_path');
             $table->timestamps();
         });
@@ -64,12 +64,12 @@ return new class extends Migration
             $table->string('name');
             $table->string('color');
             $table->float('price');
-            $table->integer('storage_decor_amount');
+            $table->integer('storage_decors_amount');
             $table->string('img_path');
             $table->timestamps();
         });
 
-        Schema::create('bouquets_flowers', function (Blueprint $table) {
+        Schema::create('bouquet_flower', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->foreignId('flower_id')->constrained('flowers')->onDelete('cascade');
             $table->foreignId('bouquet_id')->constrained('bouquets')->onDelete('cascade');
@@ -77,7 +77,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('bouquets_decors', function (Blueprint $table) {
+        Schema::create('bouquet_decor', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->foreignId('decor_id')->constrained('decors')->onDelete('cascade');
             $table->foreignId('bouquet_id')->constrained('bouquets')->onDelete('cascade');
@@ -92,8 +92,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bouquets_flowers');
-        Schema::dropIfExists('bouquets_decors');
+        Schema::dropIfExists('bouquet_flower');
+        Schema::dropIfExists('bouquet_decor');
         Schema::dropIfExists('orders');
         Schema::dropIfExists('bouquets');
         Schema::dropIfExists('users');

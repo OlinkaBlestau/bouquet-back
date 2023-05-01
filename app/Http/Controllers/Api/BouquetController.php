@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Repositories\BouquetRepository;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 
 class BouquetController extends Controller
 {
@@ -13,7 +13,7 @@ class BouquetController extends Controller
     {
         $bouquets = $bouquetRepository->paginate($request->get('limit'));
 
-        return response()->success(compact('bouquets'));
+        return response(compact('bouquets'));
     }
 
     public function store(Request $request, BouquetRepository $bouquetRepository): Response
@@ -21,14 +21,14 @@ class BouquetController extends Controller
         $data = $request->all();
         $bouquet = $bouquetRepository->create($data);
 
-        return response()->success(compact('bouquet'));
+        return response(compact('bouquet'));
     }
 
     public function show(int $id, BouquetRepository $bouquetRepository): Response
     {
-        $bouquet = $bouquetRepository->show($id);
+        $bouquet = $bouquetRepository->find($id);
 
-        return response()->success(compact('bouquet'));
+        return response(compact('bouquet'));
     }
 
     public function update(Request $request, int $id, BouquetRepository $bouquetRepository): Response
@@ -36,13 +36,13 @@ class BouquetController extends Controller
         $data = $request->all();
         $bouquet = $bouquetRepository->update($data, $id);
 
-        return response()->success(compact('bouquet'));
+        return response(compact('bouquet'));
     }
 
     public function destroy(int $id, BouquetRepository $bouquetRepository): Response
     {
         $bouquet = $bouquetRepository->delete($id);
 
-        return response()->success(compact('bouquet'));
+        return response(compact('bouquet'));
     }
 }

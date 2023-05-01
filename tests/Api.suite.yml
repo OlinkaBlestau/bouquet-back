@@ -1,0 +1,14 @@
+actor: ApiTester
+modules:
+    enabled:
+        - Laravel:
+             environment_file: .env.testing
+             run_database_migrations: true
+        - Db:
+              dsn: 'pgsql:host=bouquet-postgres;dbname=bouquet-test'
+              user: 'root'
+              password: 'root'
+              dump: 'tests/_data/dump.sql'
+        - REST:
+            url: http://localhost/api/
+            depends: Laravel

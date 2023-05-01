@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Repositories\FlowerRepository;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 
 class FlowerController extends Controller
 {
@@ -13,7 +13,7 @@ class FlowerController extends Controller
     {
         $flowers = $flowerRepository->paginate($request->get('limit'));
 
-        return response()->success(compact('flowers'));
+        return response(compact('flowers'));
     }
 
     public function store(Request $request, FlowerRepository $flowerRepository): Response
@@ -21,14 +21,14 @@ class FlowerController extends Controller
         $data = $request->all();
         $flower = $flowerRepository->create($data);
 
-        return response()->success(compact('flower'));
+        return response(compact('flower'));
     }
 
     public function show(int $id, FlowerRepository $flowerRepository): Response
     {
-        $flower = $flowerRepository->show($id);
+        $flower = $flowerRepository->find($id);
 
-        return response()->success(compact('flower'));
+        return response(compact('flower'));
     }
 
     public function update(Request $request, int $id, FlowerRepository $flowerRepository): Response
@@ -36,13 +36,13 @@ class FlowerController extends Controller
         $data = $request->all();
         $flower = $flowerRepository->update($data, $id);
 
-        return response()->success(compact('flower'));
+        return response(compact('flower'));
     }
 
     public function destroy(int $id, FlowerRepository $flowerRepository): Response
     {
         $flower = $flowerRepository->delete($id);
 
-        return response()->success(compact('flower'));
+        return response(compact('flower'));
     }
 }

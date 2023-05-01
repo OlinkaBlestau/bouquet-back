@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Repositories\DecorRepository;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 
 class DecorController extends Controller
 {
@@ -13,7 +13,7 @@ class DecorController extends Controller
     {
         $decors = $decorRepository->paginate($request->get('limit'));
 
-        return response()->success(compact('decors'));
+        return response(compact('decors'));
     }
 
     public function store(Request $request, DecorRepository $decorRepository): Response
@@ -21,14 +21,14 @@ class DecorController extends Controller
         $data = $request->all();
         $decor = $decorRepository->create($data);
 
-        return response()->success(compact('decor'));
+        return response(compact('decor'));
     }
 
     public function show(int $id, DecorRepository $decorRepository): Response
     {
-        $decor = $decorRepository->show($id);
+        $decor = $decorRepository->find($id);
 
-        return response()->success(compact('decor'));
+        return response(compact('decor'));
     }
 
     public function update(Request $request, int $id, DecorRepository $decorRepository): Response
@@ -36,13 +36,13 @@ class DecorController extends Controller
         $data = $request->all();
         $decor = $decorRepository->update($data, $id);
 
-        return response()->success(compact('decor'));
+        return response(compact('decor'));
     }
 
     public function destroy(int $id, DecorRepository $decorRepository): Response
     {
         $decor = $decorRepository->delete($id);
 
-        return response()->success(compact('decor'));
+        return response(compact('decor'));
     }
 }

@@ -9,6 +9,9 @@ services:
     volumes:
       - ${DOCKER_APP_PATH}:/var/www:rw
       - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    environment:
+      PHP_IDE_CONFIG: "serverName=bouquet"
+      XDEBUG_SESSION: docker-server
     depends_on:
       - bouquet-postgres
     networks:
@@ -17,8 +20,6 @@ services:
   bouquet-nginx:
     image: nginx:alpine
     container_name: bouquet-nginx
-    restart: unless-stopped
-    tty: true
     ports:
       - "80:80"
       - "443:443"

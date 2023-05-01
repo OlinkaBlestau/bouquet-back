@@ -13,7 +13,8 @@ class Bouquet extends Model
     use HasFactory;
 
     protected $fillable = [
-      'total_price',
+        'user_id',
+        'total_price',
     ];
 
     public function user(): BelongsTo
@@ -28,11 +29,15 @@ class Bouquet extends Model
 
     public function flowers(): BelongsToMany
     {
-        return $this->belongsToMany(Flower::class)->using(BouquetFlowers::class);
+        return $this->belongsToMany(Flower::class)
+            ->withPivot('id', 'bouquet_flowers_amount')
+            ->using(BouquetFlowers::class);
     }
 
     public function decors(): BelongsToMany
     {
-        return $this->belongsToMany(Decor::class)->using(BouquetDecors::class);
+        return $this->belongsToMany(Decor::class)
+            ->withPivot('id', 'bouquet_decors_amount')
+            ->using(BouquetDecors::class);
     }
 }

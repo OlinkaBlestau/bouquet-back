@@ -12,15 +12,4 @@ class UserRepository extends BaseRepository
     {
         return User::class;
     }
-
-    public function update(array $attributes, $id): Bouquet
-    {
-        $bouquet = parent::find($id);
-
-        $bouquet->user = $attributes['user_id'];
-        $bouquet->total_price = $attributes['total_price'];
-        $bouquet->save();
-
-        return $bouquet;
-    }
 }

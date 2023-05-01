@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\UserRepository;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Http\Response;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -13,14 +13,14 @@ class UserController extends Controller
     {
         $users = $userRepository->paginate($request->get('limit'));
 
-        return response()->success(compact('users'));
+        return response(compact('users'));
     }
 
     public function show(int $id, UserRepository $userRepository): Response
     {
-        $user = $userRepository->show($id);
+        $user = $userRepository->find($id);
 
-        return response()->success(compact('user'));
+        return response(compact('user'));
     }
 
     public function update(Request $request, int $id, UserRepository $userRepository): Response
@@ -32,12 +32,11 @@ class UserController extends Controller
                 'email',
                 'address',
                 'phone',
-            ]),
-            [$request->only(['password' => bcrypt($request->password)])]
+            ])
         );
 
         $user = $userRepository->update($data, $id);
 
-        return response()->success(compact('user'));
+        return response(compact('user'));
     }
 }
