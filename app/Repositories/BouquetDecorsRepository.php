@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\BouquetDecors;
+use App\Validators\BouquetDecorsValidator;
 use \Illuminate\Database\Eloquent\Builder;
 use \Illuminate\Database\Eloquent\Model;
 use Illuminate\Container\Container as Application;
@@ -25,6 +26,11 @@ class BouquetDecorsRepository extends BaseRepository
     public function model(): string
     {
         return BouquetDecors::class;
+    }
+
+    public function validator(): string
+    {
+        return BouquetDecorsValidator::class;
     }
 
     public function find($id, $columns = ['*']): Builder|Model

@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\BouquetFlowers;
+use App\Validators\BouquetFlowersValidator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Eloquent\BaseRepository;
@@ -23,6 +24,11 @@ class BouquetFlowersRepository extends BaseRepository
     public function model(): string
     {
         return BouquetFlowers::class;
+    }
+
+    public function validator(): string
+    {
+        return BouquetFlowersValidator::class;
     }
 
     public function find($id, $columns = ['*']): Builder|Model

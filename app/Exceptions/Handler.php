@@ -2,29 +2,33 @@
 
 namespace App\Exceptions;
 
+use App\Validators\UserValidator;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Prettus\Validator\Exceptions\ValidatorException;
 use Throwable;
 
 class Handler extends ExceptionHandler
 {
-    /**
-     * The list of the inputs that are never flashed to the session on validation exceptions.
-     *
-     * @var array<int, string>
-     */
-    protected $dontFlash = [
-        'current_password',
-        'password',
-        'password_confirmation',
+    protected $dontReport = [
+        ValidatorException::class,
     ];
 
-    /**
-     * Register the exception handling callbacks for the application.
-     */
-    public function register(): void
+    public function report(Throwable $exception): void
     {
-        $this->reportable(function (Throwable $e) {
-            //
-        });
+        if ($exception instanceof ValidatorException) {
+            $message = json_encode([
+                'error' => true,
+                'messages' => $exception->getMessageBag()
+            ]);
+
+            throw new HttpResponseException(
+                response($message, 422)
+            );
+        }
+
+        parent::report($exception);
     }
+
+
 }
