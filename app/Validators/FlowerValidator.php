@@ -15,7 +15,7 @@ class FlowerValidator extends LaravelValidator
             'color' => 'required|string',
             'price' => 'required|integer',
             'storage_flowers_amount' => 'required|integer',
-            'img_path' => 'required|string',
+            'img_path' => 'string',
         ];
     }
 

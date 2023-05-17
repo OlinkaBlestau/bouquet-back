@@ -15,7 +15,7 @@ class DecorValidator extends LaravelValidator
             'color' => 'required|string',
             'price' => 'required|integer',
             'storage_decors_amount' => 'required|integer',
-            'img_path' => 'required|string',
+            'img_path' => 'string',
         ];
     }
 
