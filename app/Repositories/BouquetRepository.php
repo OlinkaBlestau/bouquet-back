@@ -17,4 +17,17 @@ class BouquetRepository extends BaseRepository
     {
         return BouquetValidator::class;
     }
+
+    public function create(array $attributes)
+    {
+        $configuration = $attributes['configuration'];
+        unset($attributes['configuration']);
+
+        $bouquet = parent::create($attributes);
+
+        $bouquet->configuration = json_encode($configuration);
+        $bouquet->save();
+
+        return $bouquet;
+    }
 }
