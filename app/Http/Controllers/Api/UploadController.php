@@ -25,4 +25,13 @@ class UploadController extends Controller
 
         return response(compact('result'));
     }
+
+    public function uploadBouquetAsImage(Request $request, $id, FileUploadService $fileUploadService): Response
+    {
+        $file = $request->input('image');
+        $fileName = $request->input('fileName');
+        $result = $fileUploadService->uploadBouquetImage($id, $file, $fileName);
+
+        return response(compact('result'));
+    }
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\DecorController;
 use App\Http\Controllers\Api\FlowerController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ShopController;
+use App\Http\Controllers\Api\StripeController;
 use App\Http\Controllers\Api\UploadController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +33,7 @@ Route::group(['prefix' => 'auth'], function () {
 Route::group(['prefix' => 'image/upload'], function () {
     Route::post('/flower/{id}', [UploadController::class, 'uploadFlowerImage']);
     Route::post('/decor/{id}', [UploadController::class, 'uploadDecorImage']);
+    Route::post('/bouquet/{id}', [UploadController::class, 'uploadBouquetAsImage']);
 });
 
 Route::get('/users', [UserController::class, 'index']);
@@ -52,3 +54,7 @@ Route::post('/bouquet-decors', [BouquetDecorsController::class, 'store']);
 Route::get('/bouquet-decors/{id}', [BouquetDecorsController::class, 'show']);
 Route::delete('/bouquet-decors/{id}', [BouquetDecorsController::class, 'destroy']);
 
+Route::group(['prefix' => 'stripe'], function () {
+    Route::get('/intent/{id}', [StripeController::class, 'getPaymentIntent']);
+    Route::post('/purchase', [StripeController::class, 'purchase']);
+});

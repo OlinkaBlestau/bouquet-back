@@ -40,4 +40,20 @@ class FileUploadService
         ];
     }
 
+    public function uploadBouquetImage($bouquetId, $file, $fileName): array
+    {
+       /* $flowerRepository = app(FlowerRepository::class);
+        $flower = $flowerRepository->find($bouquetId);
+
+        $fileName = $file->getClientOriginalName();*/
+        Storage::putFileAs('./public', $file, $fileName);
+
+        /*$flower->img_path = $fileName;
+        $flower->save();*/
+
+        return [
+            'name' => $fileName,
+        ];
+    }
+
 }
