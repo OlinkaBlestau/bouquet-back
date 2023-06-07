@@ -14,7 +14,9 @@ class Bouquet extends Model
 
     protected $fillable = [
         'user_id',
+        'name',
         'total_price',
+        'configuration'
     ];
 
     public function user(): BelongsTo
