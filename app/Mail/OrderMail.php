@@ -42,6 +42,9 @@ class OrderMail extends Mailable
     {
         return new Content(
             view: 'mails.order_mail',
+            with: [
+                'order' => $this->order,
+            ]
         );
     }
 

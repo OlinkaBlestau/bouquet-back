@@ -31,6 +31,13 @@ class OrderController extends Controller
         return response(compact('order'));
     }
 
+    public function showByUser(int $id, OrderRepository $orderRepository): Response
+    {
+        $order = $orderRepository->showByUser($id);
+
+        return response(compact('order'));
+    }
+
     public function update(Request $request, int $id, OrderRepository $orderRepository): Response
     {
         $data = $request->all();

@@ -58,3 +58,5 @@ Route::group(['prefix' => 'stripe'], function () {
     Route::get('/intent/{id}', [StripeController::class, 'getPaymentIntent']);
     Route::post('/purchase', [StripeController::class, 'purchase']);
 });
+
+Route::get('/orders/user/{id}', [OrderController::class, 'showByUser']);
