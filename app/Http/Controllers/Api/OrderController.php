@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function index(Request $request, OrderRepository $orderRepository): Response
+    public function index(OrderRepository $orderRepository): Response
     {
-        $orders = $orderRepository->paginate($request->get('limit'));
+        $orders = $orderRepository->all();
 
         return response(compact('orders'));
     }

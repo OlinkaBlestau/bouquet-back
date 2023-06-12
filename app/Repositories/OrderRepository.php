@@ -18,6 +18,18 @@ class OrderRepository extends BaseRepository
         return OrderValidator::class;
     }
 
+    public function create(array $attributes)
+    {
+        $order = parent::create($attributes);
+
+        return $this->model->with([
+            'shop',
+            'bouquet.user',
+            'bouquet.flowers',
+            'bouquet.decors',
+        ])->find($order->id);
+    }
+
     public function find($id, $columns = ['*'])
     {
         return $this->model->with([
@@ -26,6 +38,16 @@ class OrderRepository extends BaseRepository
             'bouquet.flowers',
             'bouquet.decors',
         ])->find($id);
+    }
+
+    public function all($columns = ['*'])
+    {
+        return $this->model->with([
+            'shop',
+            'bouquet.user',
+            'bouquet.flowers',
+            'bouquet.decors',
+        ])->get();
     }
 
     public function showByUser($id)
