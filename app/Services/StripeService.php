@@ -11,6 +11,7 @@ use App\Repositories\OrderRepository;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Prettus\Validator\Exceptions\ValidatorException;
 
 class StripeService
 {
@@ -53,7 +54,7 @@ class StripeService
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            throw new ValidatorException($e->getMessageBag());
         }
 
         $user->charge(
