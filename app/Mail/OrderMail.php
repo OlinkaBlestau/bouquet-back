@@ -30,8 +30,8 @@ class OrderMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: 'ciname@gmail.com',
-            subject: 'Cinema invoice',
+            from: 'bouquet@gmail.com',
+            subject: 'Bouquet order',
         );
     }
 

@@ -1,41 +1,56 @@
 
 <div>
-    <h2 style="text-align: center">Дякуємо за Ваше замовлення</h2>
-    <p>Order</p>
-    <p>name</p>
-    {{$order->bouquet()->first()->name}}
+    <h2 style="text-align: center">Дякуємо за Ваше замовлення букету</h2>
+    <p style="text-align: center; font-size: 20px">{{$order->bouquet()->first()->name}}</p>
+    <div style="
+    border: #000 solid 1px;
+    border-radius: 10px;
+    width: 870px;
+    padding: 18px;
+    "
+    >
     @foreach ($order->bouquet()->first()->flowers as $flower )
         <div
             style="display: flex;
-         border: 1px solid #4d7cbc;
-         border-radius: 20px;
-         font-size: 1.3vw;
-         padding: 10px;
-         margin-bottom: 10px;
-         margin-top: 10px;
+         font-size: 1vw;
+         padding: 8px;
+         margin-bottom: 2px;
+         margin-top: 2px;
          ">
-            <p><strong>Row</strong> : {{ $flower->name }}</p>
-            <p style="margin-left: 70px"><strong>Seat</strong> : {{ $flower->price }}</p>
-            <p style="margin-left: 70px"><strong>Seat</strong> : {{ $flower->color }}</p>
-            <p style="margin-left: 70px"><strong>Seat</strong> : {{ $flower->pivot->bouquet_flowers_amount }}</p>
+            <p><i>Назва квітки:</i> {{ $flower->name }}</p>
+            <p style="margin-left: 70px"><i>Колір квітки:</i> {{ $flower->color }}</p>
+            <p style="margin-left: 70px"><i>Ціна за одиницю:</i> {{ $flower->price }} грн.</p>
+{{--            <p style="margin-left: 70px"><strong>Seat</strong> : {{ $flower->pivot->bouquet_flowers_amount }}</p>--}}
         </div>
     @endforeach
-    @foreach ($order->bouquet()->first()->decors as $decor )
-        <div
-            style="display: flex;
-         border: 1px solid #4d7cbc;
-         border-radius: 20px;
-         font-size: 1.3vw;
-         padding: 10px;
-         margin-bottom: 10px;
-         margin-top: 10px;
+
+    <hr>
+        @foreach ($order->bouquet()->first()->decors as $decor )
+            <div
+                style="display: flex;
+         font-size: 1vw;
+         padding: 8px;
+         margin-bottom: 2px;
+         margin-top: 2px;
          ">
-            <p><strong>Row</strong> : {{ $decor->name }}</p>
-            <p style="margin-left: 70px"><strong>Seat</strong> : {{ $decor->price }}</p>
-            <p style="margin-left: 70px"><strong>Seat</strong> : {{ $decor->color }}</p>
-            <p style="margin-left: 70px"><strong>Seat</strong> : {{ $decor->pivot->bouquet_decors_amount }}</p>
-        </div>
-    @endforeach
-    <p>Total price</p>
-    {{ $order->amount * $order->bouquet()->first()->total_price }}
+                <p><i>Назва декору:</i> : {{ $decor->name }}</p>
+                <p style="margin-left: 70px"><i>Колір декору:</i> {{ $decor->color }}</p>
+                <p style="margin-left: 70px"><i>Ціна за одиницю:</i> {{ $decor->price }}</p>
+                <p style="margin-left: 70px"><i>Ціна за одиницю:</i> {{ $decor->price }}</p>
+                {{--            <p style="margin-left: 70px"><strong>Seat</strong> : {{ $decor->pivot->bouquet_decors_amount }}</p>--}}
+
+            </div>
+        @endforeach
+    </div>
+<div
+    style="display: flex;
+    border: #000 solid 1px;
+    border-radius: 10px;
+    width: 860px;
+    margin-top: 15px;
+    padding: 18px;
+    font-size: 1vw">
+    <p><strong>Total price:</strong> {{ $order->amount * $order->bouquet()->first()->total_price }} грн.</p>
+</div>
+
 </div>
