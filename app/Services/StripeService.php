@@ -28,26 +28,28 @@ class StripeService
         DB::beginTransaction();
         try {
             foreach ($data["bouquet"]->flowers as $flower) {
+                $flowerAmount = $flower->pivot->bouquet_flowers_amount * $data["bouquet"]->amount;
                 $existedFlower = Flower::find($flower->id);
-                if ($flower->pivot->bouquet_flowers_amount > $existedFlower->storage_flowers_amount) {
+                if ($flowerAmount > $existedFlower->storage_flowers_amount) {
                     $errorType = "flower";
                     $errorId = $flower->id;
                     throw new NotEnoughResources($errorId, $errorType);
                 }
 
-                $existedFlower->storage_flowers_amount -= $flower->pivot->bouquet_flowers_amount;
+                $existedFlower->storage_flowers_amount -= $flowerAmount;
                 $existedFlower->save();
             }
 
             foreach ($data["bouquet"]->decors as $decor) {
+                $decorAmount = $decor->pivot->bouquet_decors_amount * $data["bouquet"]->amount;
                 $existedDecor = Decor::find($decor->id);
-                if ($decor->pivot->bouquet_decors_amount > $existedDecor->storage_decors_amount) {
+                if ($decorAmount > $existedDecor->storage_decors_amount) {
                     $errorType = "decor";
                     $errorId = $decor->id;
                     throw new NotEnoughResources($errorId, $errorType);
                 }
 
-                $existedDecor->storage_decors_amount -= $decor->pivot->bouquet_decors_amount;
+                $existedDecor->storage_decors_amount -= $decorAmount;
                 $existedDecor->save();
             }
 
