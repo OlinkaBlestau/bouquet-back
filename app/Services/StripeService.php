@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\NotEnoughResources;
 use App\Mail\OrderMail;
 use App\Models\Decor;
 use App\Models\Flower;
@@ -21,13 +22,17 @@ class StripeService
         $paymentMethod = $data['payment_method'];
         $totalMoney = $data["bouquet"]->total_price;
         $orderRepository = app(OrderRepository::class);
+        $errorType = "";
+        $errorId = null;
 
         DB::beginTransaction();
         try {
             foreach ($data["bouquet"]->flowers as $flower) {
                 $existedFlower = Flower::find($flower->id);
                 if ($flower->pivot->bouquet_flowers_amount > $existedFlower->storage_flowers_amount) {
-                    throw new \Exception("Not enough flower $flower->id at system", 422);
+                    $errorType = "flower";
+                    $errorId = $flower->id;
+                    throw new NotEnoughResources($errorId, $errorType);
                 }
 
                 $existedFlower->storage_flowers_amount -= $flower->pivot->bouquet_flowers_amount;
@@ -37,7 +42,9 @@ class StripeService
             foreach ($data["bouquet"]->decors as $decor) {
                 $existedDecor = Decor::find($decor->id);
                 if ($decor->pivot->bouquet_decors_amount > $existedDecor->storage_decors_amount) {
-                    throw new \Exception("Not enough decor $decor->id at system", 422);
+                    $errorType = "decor";
+                    $errorId = $decor->id;
+                    throw new NotEnoughResources($errorId, $errorType);
                 }
 
                 $existedDecor->storage_decors_amount -= $decor->pivot->bouquet_decors_amount;
@@ -52,9 +59,9 @@ class StripeService
             ]);
 
             DB::commit();
-        } catch (\Exception $e) {
+        } catch (NotEnoughResources $e) {
             DB::rollback();
-            throw new ValidatorException($e->getMessageBag());
+            throw new NotEnoughResources($errorId, $errorType);
         }
 
         $user->charge(

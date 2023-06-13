@@ -10,9 +10,6 @@ use Throwable;
 
 class Handler extends ExceptionHandler
 {
-    protected $dontReport = [
-        ValidatorException::class,
-    ];
 
     public function report(Throwable $exception): void
     {
