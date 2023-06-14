@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\DecorController;
 use App\Http\Controllers\Api\FlowerController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ShopController;
+use App\Http\Controllers\Api\StatisticController;
 use App\Http\Controllers\Api\StripeController;
 use App\Http\Controllers\Api\UploadController;
 use App\Http\Controllers\Api\UserController;
@@ -60,3 +61,4 @@ Route::group(['prefix' => 'stripe'], function () {
 });
 
 Route::get('/orders/user/{id}', [OrderController::class, 'showByUser']);
+Route::get('/statistic/sale/', [StatisticController::class, 'sale']);
