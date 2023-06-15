@@ -39,4 +39,24 @@ class BouquetRepository extends BaseRepository
     {
         return $this->model->with(['flowers', 'decors'])->find($id);
     }
+
+    public function update(array $attributes, $id)
+    {
+        $configuration = $attributes['configuration'];
+        unset($attributes['configuration']);
+        $bouquet =  parent::update($attributes, $id);
+
+        $bouquet->flowers()->detach();
+        $bouquet->decors()->detach();
+
+        $bouquet->flowers()->attach($attributes['flowers'], ["bouquet_flowers_amount" => 1]);
+        $bouquet->decors()->attach($attributes['decors'], ["bouquet_decors_amount" => 1]);
+
+        $bouquet->configuration = json_encode($configuration);
+        $bouquet->save();
+
+        $bouquet = $this->model->with(['flowers', 'decors'])->find($bouquet->id);
+
+        return $bouquet;
+    }
 }

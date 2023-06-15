@@ -36,7 +36,6 @@
                 <p><i>Назва декору:</i> : {{ $decor->name }}</p>
                 <p style="margin-left: 70px"><i>Колір декору:</i> {{ $decor->color }}</p>
                 <p style="margin-left: 70px"><i>Ціна за одиницю:</i> {{ $decor->price }}</p>
-                <p style="margin-left: 70px"><i>Ціна за одиницю:</i> {{ $decor->price }}</p>
                 {{--            <p style="margin-left: 70px"><strong>Seat</strong> : {{ $decor->pivot->bouquet_decors_amount }}</p>--}}
 
             </div>

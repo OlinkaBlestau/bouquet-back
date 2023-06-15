@@ -1,4 +1,11 @@
-
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+</head>
+<body>
+<style>
+    body { font-family: DejaVu Sans, serif; }
+</style>
 <div>
     <h2 style="text-align: center">Дякуємо за Ваше замовлення букету</h2>
     <p style="text-align: center; font-size: 20px">{{$order->bouquet()->first()->name}}</p>
@@ -54,3 +61,5 @@
     </div>
 
 </div>
+</body>
+</html>
