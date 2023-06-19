@@ -12,14 +12,14 @@
     <div style="
     border: #000 solid 1px;
     border-radius: 10px;
-    width: 870px;
+    width: 550px;
     padding: 18px;
     "
     >
         @foreach ($order->bouquet()->first()->flowers as $flower )
             <div
                 style="display: flex;
-         font-size: 1vw;
+         font-size: 0.8vw;
          padding: 8px;
          margin-bottom: 2px;
          margin-top: 2px;
@@ -35,7 +35,7 @@
         @foreach ($order->bouquet()->first()->decors as $decor )
             <div
                 style="display: flex;
-         font-size: 1vw;
+         font-size: 0.8vw;
          padding: 8px;
          margin-bottom: 2px;
          margin-top: 2px;
@@ -53,7 +53,7 @@
         style="display: flex;
     border: #000 solid 1px;
     border-radius: 10px;
-    width: 860px;
+    width: 550px;
     margin-top: 15px;
     padding: 18px;
     font-size: 1vw">
